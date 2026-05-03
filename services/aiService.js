@@ -3,7 +3,7 @@ const { VertexAI } = require('@google-cloud/vertexai');
 // Initialize Vertex AI with the provided Cloud project ID and location
 // us-central1 is generally a safe default region with broad model support.
 const vertex_ai = new VertexAI({ project: 'invertible-star-495216-e3', location: 'us-central1' });
-const model = 'gemini-1.0-pro'; // Fallback to a widely available model
+const model = 'gemini-1.5-flash-001'; // Try specific version for us-central1
 
 const generativeModel = vertex_ai.preview.getGenerativeModel({
   model: model,
