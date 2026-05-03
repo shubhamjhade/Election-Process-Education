@@ -1,29 +1,27 @@
-const { getElectionInfo } = require('../services/aiService');
+'use strict';
 
-jest.mock('@google-cloud/vertexai', () => {
-  const mVertexAI = {
-    preview: {
-      getGenerativeModel: jest.fn().mockReturnValue({
-        generateContent: jest.fn().mockResolvedValue({
-          response: {
-            candidates: [
-              {
-                content: {
-                  parts: [{ text: 'Mocked Gemini Response' }]
-                }
-              }
-            ]
-          }
-        })
-      })
-    }
+jest.mock('@google/genai', () => {
+  const mockGenerateContent = jest.fn().mockResolvedValue({
+    text: 'Mocked Gemini response about Indian elections',
+  });
+  return {
+    GoogleGenAI: jest.fn().mockImplementation(() => ({
+      models: { generateContent: mockGenerateContent },
+    })),
   };
-  return { VertexAI: jest.fn(() => mVertexAI) };
 });
 
+const { getElectionInfo } = require('../services/aiService');
+
 describe('AI Service', () => {
-  it('should return text response from Vertex AI', async () => {
-    const response = await getElectionInfo('test prompt');
-    expect(response).toBe('Mocked Gemini Response');
+  it('returns text response from Gemini', async () => {
+    const response = await getElectionInfo('How to register?');
+    expect(response).toBe('Mocked Gemini response about Indian elections');
+  });
+
+  it('accepts string prompts', async () => {
+    const response = await getElectionInfo('What is EVM?');
+    expect(typeof response).toBe('string');
+    expect(response.length).toBeGreaterThan(0);
   });
 });

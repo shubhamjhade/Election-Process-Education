@@ -3,91 +3,123 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="An interactive AI assistant helping you understand the Indian Election Process, voter registration, and timelines.">
-  <title>Indian Election Guide AI</title>
+  <meta name="description" content="Interactive AI assistant to learn about the Indian Election Process, voter registration, EVM voting, and election timelines.">
+  <meta name="theme-color" content="#0f172a">
+  <title>Indian Election Process Guide — AI Assistant</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <div class="app-container">
-    <header class="app-header">
-      <h1>Election Process Guide</h1>
-      <p>Your interactive AI assistant for the Indian Elections</p>
+  <!-- Skip to main content link for accessibility -->
+  <a href="#main-content" class="skip-link" id="skip-link">Skip to main content</a>
+
+  <div class="app-container" role="application" aria-label="Election Process Guide Application">
+    <header class="app-header" role="banner">
+      <h1 id="app-title">🇮🇳 Election Process Guide</h1>
+      <p id="app-subtitle">Your interactive AI assistant for the Indian Elections</p>
     </header>
-    
-    <main class="main-content" id="main-content">
-      <div class="chat-container">
-        <div class="chat-box" id="chat-box" aria-live="polite" aria-atomic="false">
-          <div class="message ai-message">
+
+    <main class="main-content" id="main-content" role="main">
+      <!-- Chat Panel -->
+      <section class="chat-container" aria-labelledby="chat-heading">
+        <h2 id="chat-heading" class="visually-hidden">Chat with AI Assistant</h2>
+        <div class="chat-box" id="chat-box" role="log" aria-live="polite" aria-atomic="false" aria-relevant="additions" tabindex="0">
+          <div class="message ai-message" role="article" aria-label="AI message">
+            <div class="avatar ai-avatar" aria-hidden="true">🤖</div>
             <div class="message-content">
-              Hello! I am your Indian Election Process Guide. You can ask me about voter registration, election timelines, polling steps, or any other election-related queries. How can I help you today?
+              Namaste! I'm your Indian Election Process Guide. Ask me anything about:
+              <ul>
+                <li>Voter registration &amp; EPIC card</li>
+                <li>EVM &amp; VVPAT voting steps</li>
+                <li>Election timelines &amp; phases</li>
+                <li>Role of the Election Commission</li>
+              </ul>
+              How can I help you today?
             </div>
           </div>
         </div>
-        
-        <form class="input-form" id="chat-form">
-          <label for="user-input" class="visually-hidden">Type your question</label>
-          <input 
-            type="text" 
-            id="user-input" 
-            name="user-input" 
-            placeholder="E.g., How do I register to vote?" 
+
+        <!-- Typing indicator -->
+        <div id="typing-indicator" class="typing-indicator hidden" aria-hidden="true">
+          <div class="avatar ai-avatar" aria-hidden="true">🤖</div>
+          <div class="typing-dots"><span></span><span></span><span></span></div>
+        </div>
+
+        <form class="input-form" id="chat-form" aria-label="Send a message">
+          <label for="user-input" class="visually-hidden">Type your election question</label>
+          <input
+            type="text"
+            id="user-input"
+            name="user-input"
+            placeholder="E.g., How do I register to vote?"
             autocomplete="off"
             required
             aria-required="true"
+            maxlength="500"
           />
-          <button type="submit" id="send-button" aria-label="Send Message">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <button type="submit" id="send-button" aria-label="Send Message" title="Send">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <line x1="22" y1="2" x2="11" y2="13"></line>
               <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
             </svg>
           </button>
         </form>
-      </div>
-      
-      <aside class="timeline-container">
-        <h2>Quick Election Steps</h2>
-        <ul class="timeline">
-          <li>
-            <div class="timeline-icon">1</div>
+      </section>
+
+      <!-- Timeline Panel -->
+      <aside class="timeline-container" aria-labelledby="timeline-heading">
+        <h2 id="timeline-heading">Quick Election Steps</h2>
+        <ol class="timeline" role="list">
+          <li role="listitem">
+            <div class="timeline-icon" aria-hidden="true">1</div>
             <div class="timeline-content">
               <h3>Voter Registration</h3>
-              <p>Register online via the NVSP portal or fill Form 6.</p>
+              <p>Register online via the <strong>NVSP portal</strong> or fill <strong>Form 6</strong> at your local ERO office. You must be 18+ on the qualifying date.</p>
             </div>
           </li>
-          <li>
-            <div class="timeline-icon">2</div>
+          <li role="listitem">
+            <div class="timeline-icon" aria-hidden="true">2</div>
             <div class="timeline-content">
-              <h3>Check Voter List</h3>
-              <p>Verify your name on the electoral roll before polling day.</p>
+              <h3>Check Electoral Roll</h3>
+              <p>Verify your name on the electoral roll at <strong>electoralsearch.eci.gov.in</strong> before polling day.</p>
             </div>
           </li>
-          <li>
-            <div class="timeline-icon">3</div>
+          <li role="listitem">
+            <div class="timeline-icon" aria-hidden="true">3</div>
             <div class="timeline-content">
               <h3>Polling Day</h3>
-              <p>Visit your designated polling booth with a valid ID (EPIC).</p>
+              <p>Visit your designated booth with a valid <strong>Photo ID (EPIC)</strong>. Cast your vote using the <strong>EVM</strong> and verify via <strong>VVPAT</strong>.</p>
             </div>
           </li>
-          <li>
-            <div class="timeline-icon">4</div>
+          <li role="listitem">
+            <div class="timeline-icon" aria-hidden="true">4</div>
             <div class="timeline-content">
-              <h3>Results</h3>
-              <p>Votes are counted and results declared by the ECI.</p>
+              <h3>Counting &amp; Results</h3>
+              <p>Votes are counted under <strong>ECI supervision</strong>. Results are declared and the winning candidate is announced.</p>
             </div>
           </li>
-        </ul>
+        </ol>
+
+        <div class="quick-links">
+          <h3>Useful Links</h3>
+          <ul>
+            <li><a href="https://www.eci.gov.in" target="_blank" rel="noopener noreferrer">Election Commission of India ↗</a></li>
+            <li><a href="https://www.nvsp.in" target="_blank" rel="noopener noreferrer">National Voter Service Portal ↗</a></li>
+            <li><a href="https://electoralsearch.eci.gov.in" target="_blank" rel="noopener noreferrer">Search Electoral Roll ↗</a></li>
+          </ul>
+        </div>
       </aside>
     </main>
+
+    <footer class="app-footer" role="contentinfo">
+      <p>Powered by <strong>Google Gemini AI</strong> · Built for educational purposes only</p>
+    </footer>
   </div>
-  
-  <!-- Loading Indicator (Hidden by default) -->
-  <div id="loading-indicator" class="hidden" aria-hidden="true">
-    <div class="spinner"></div>
-    <span class="visually-hidden">Loading response...</span>
-  </div>
+
+  <!-- Live region for screen reader announcements -->
+  <div id="sr-announcer" class="visually-hidden" aria-live="assertive" aria-atomic="true" role="status"></div>
 
   <script src="js/main.js"></script>
   <script src="js/accessibility.js"></script>

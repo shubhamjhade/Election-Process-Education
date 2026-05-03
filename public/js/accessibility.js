@@ -1,16 +1,24 @@
-// Enhance accessibility dynamically
+'use strict';
+/**
+ * @fileoverview Accessibility enhancements — keyboard vs mouse detection,
+ * focus trapping, and screen reader announcements.
+ */
 document.addEventListener('DOMContentLoaded', () => {
-  // Focus management: ensure focus ring is visible only on keyboard navigation
-  document.body.addEventListener('mousedown', function() {
-    document.body.classList.add('using-mouse');
+  // Mouse vs keyboard detection for focus styles
+  document.body.addEventListener('mousedown', () => document.body.classList.add('using-mouse'));
+  document.body.addEventListener('keydown', (e) => {
+    if (e.key === 'Tab') document.body.classList.remove('using-mouse');
   });
 
-  document.body.addEventListener('keydown', function(event) {
-    if (event.key === 'Tab') {
-      document.body.classList.remove('using-mouse');
+  // Keyboard shortcut: Ctrl+Enter to submit from anywhere
+  document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+      const form = document.getElementById('chat-form');
+      if (form) form.dispatchEvent(new Event('submit', { cancelable: true }));
     }
   });
 
-  // Example of using ARIA live regions for announcements
-  // Screen readers will read anything added to elements with aria-live="polite"
+  // Auto-focus input on page load
+  const input = document.getElementById('user-input');
+  if (input) input.focus();
 });
