@@ -1,25 +1,20 @@
-const { VertexAI } = require('@google-cloud/vertexai');
+const { GoogleGenAI } = require('@google/genai');
 
-// Initialize Vertex AI with the provided Cloud project ID and location
-// us-central1 is generally a safe default region with broad model support.
-const vertex_ai = new VertexAI({ project: 'invertible-star-495216-e3', location: 'us-central1' });
-const model = 'gemini-1.5-flash-001'; // Try specific version for us-central1
-
-const generativeModel = vertex_ai.preview.getGenerativeModel({
-  model: model,
-  generationConfig: {
-    maxOutputTokens: 1024,
-    temperature: 0.2,
-    topP: 0.8,
-  },
-  systemInstruction: {
-    parts: [
-      {
-        text: "You are an expert on the Indian Election Process. You provide clear, concise, and easy-to-understand explanations about how elections work in India, voter registration, polling steps, and timelines. Always be neutral, accurate, and helpful. Use simple language and format responses with bullet points if necessary. Do not discuss political opinions or endorse any party."
-      }
-    ]
+// We use the new @google/genai SDK
+let ai;
+try {
+  // Use API key from environment for simpler auth that works across environments
+  if (process.env.GEMINI_API_KEY) {
+    ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+  } else {
+    // Attempt ADC if no key provided
+    ai = new GoogleGenAI({});
   }
-});
+} catch (error) {
+  console.error("Failed to initialize GoogleGenAI:", error);
+}
+
+const model = 'gemini-1.5-flash';
 
 /**
  * Send a message to Gemini and get a response.
@@ -27,17 +22,25 @@ const generativeModel = vertex_ai.preview.getGenerativeModel({
  * @returns {Promise<string>} The AI's response.
  */
 async function getElectionInfo(prompt) {
+  if (!ai) {
+    throw new Error('AI Service is not initialized properly. Check API keys.');
+  }
+  
   try {
-    const req = {
-      contents: [
-        { role: 'user', parts: [{ text: prompt }] }
-      ],
-    };
-    const response = await generativeModel.generateContent(req);
-    const textResponse = response.response.candidates[0].content.parts[0].text;
-    return textResponse;
+    const response = await ai.models.generateContent({
+      model: model,
+      contents: prompt,
+      config: {
+        maxOutputTokens: 1024,
+        temperature: 0.2,
+        topP: 0.8,
+        systemInstruction: "You are an expert on the Indian Election Process. You provide clear, concise, and easy-to-understand explanations about how elections work in India, voter registration, polling steps, and timelines. Always be neutral, accurate, and helpful. Use simple language and format responses with bullet points if necessary. Do not discuss political opinions or endorse any party."
+      }
+    });
+    
+    return response.text;
   } catch (error) {
-    console.error('Error generating content from Vertex AI:', error);
+    console.error('Error generating content from Google Gen AI:', error);
     throw new Error('Failed to fetch response from AI service.');
   }
 }
