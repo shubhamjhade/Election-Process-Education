@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="An interactive AI assistant helping you understand the Indian Election Process, voter registration, and timelines.">
+  <title>Indian Election Guide AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <header class="app-header">
+      <h1>Election Process Guide</h1>
+      <p>Your interactive AI assistant for the Indian Elections</p>
+    </header>
+    
+    <main class="main-content" id="main-content">
+      <div class="chat-container">
+        <div class="chat-box" id="chat-box" aria-live="polite" aria-atomic="false">
+          <div class="message ai-message">
+            <div class="message-content">
+              Hello! I am your Indian Election Process Guide. You can ask me about voter registration, election timelines, polling steps, or any other election-related queries. How can I help you today?
+            </div>
+          </div>
+        </div>
+        
+        <form class="input-form" id="chat-form">
+          <label for="user-input" class="visually-hidden">Type your question</label>
+          <input 
+            type="text" 
+            id="user-input" 
+            name="user-input" 
+            placeholder="E.g., How do I register to vote?" 
+            autocomplete="off"
+            required
+            aria-required="true"
+          />
+          <button type="submit" id="send-button" aria-label="Send Message">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+          </button>
+        </form>
+      </div>
+      
+      <aside class="timeline-container">
+        <h2>Quick Election Steps</h2>
+        <ul class="timeline">
+          <li>
+            <div class="timeline-icon">1</div>
+            <div class="timeline-content">
+              <h3>Voter Registration</h3>
+              <p>Register online via the NVSP portal or fill Form 6.</p>
+            </div>
+          </li>
+          <li>
+            <div class="timeline-icon">2</div>
+            <div class="timeline-content">
+              <h3>Check Voter List</h3>
+              <p>Verify your name on the electoral roll before polling day.</p>
+            </div>
+          </li>
+          <li>
+            <div class="timeline-icon">3</div>
+            <div class="timeline-content">
+              <h3>Polling Day</h3>
+              <p>Visit your designated polling booth with a valid ID (EPIC).</p>
+            </div>
+          </li>
+          <li>
+            <div class="timeline-icon">4</div>
+            <div class="timeline-content">
+              <h3>Results</h3>
+              <p>Votes are counted and results declared by the ECI.</p>
+            </div>
+          </li>
+        </ul>
+      </aside>
+    </main>
+  </div>
+  
+  <!-- Loading Indicator (Hidden by default) -->
+  <div id="loading-indicator" class="hidden" aria-hidden="true">
+    <div class="spinner"></div>
+    <span class="visually-hidden">Loading response...</span>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script src="js/accessibility.js"></script>
+</body>
+</html>
